@@ -17,6 +17,7 @@ jobs:
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
           echo "$HOME/bin" >> $GITHUB_PATH
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+          echo "/home/runner/work/ota/ota/bin" >> $GITHUB_PATH
 
       - name: Install ESP32 core
         run: |
@@ -25,8 +26,10 @@ jobs:
 
       - name: Compile the sketch
         run: |
-          arduino-cli compile --fqbn esp32:esp32:esp32 blink/blink.ino --output-dir ./build
+          arduino-cli compile --fqbn esp32:esp32:esp32 blink/blink.ino
 
       - name: Upload via OTA
         run: |
-          arduino-cli upload -p 192.168.1.107 --fqbn esp32:esp32:esp32 --port 3232 --auth ${{ secrets.OTA_PASSWORD }} ./build/blink.ino
+          arduino-cli upload -p 192.168.0.168 --fqbn esp32:esp32:esp32 blink/blink.ino
+        env:
+          OTA_PASSWORD: ${{ secrets.OTA_PASSWORD }}

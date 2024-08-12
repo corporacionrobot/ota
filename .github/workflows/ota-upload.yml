@@ -30,4 +30,4 @@ jobs:
 
       - name: Upload via OTA
         run: |
-          arduino-cli upload -p net:192.168.0.168 --fqbn esp32:esp32:esp32 --input-file ./build/blink.ino.bin
+          arduino-cli upload -p net:192.168.0.168:3232 --fqbn esp32:esp32:esp32 --input-file ./build/blink.ino.bin

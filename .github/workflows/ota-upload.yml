@@ -28,10 +28,6 @@ jobs:
         run: |
           arduino-cli compile --fqbn esp32:esp32:esp32 --output-dir ./build blink/blink.ino
 
-      - name: Install esptool.py
+      - name: Upload via OTA
         run: |
-          pip install esptool
-
-      - name: Upload via OTA using esptool
-        run: |
-          esptool.py --chip esp32 --port 192.168.0.168 --baud 115200 write_flash 0x10000 ./build/blink.ino.bin
+          arduino-cli upload --fqbn esp32:esp32:esp32 -p 192.168.0.168 ./build/blink.ino.bin

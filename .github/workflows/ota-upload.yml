@@ -1,0 +1,29 @@
+name: Upload Blink to ESP32 via OTA
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Arduino CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32
+
+      - name: Compile the sketch
+        run: |
+          arduino-cli compile --fqbn esp32:esp32:esp32 blink.ino
+
+      - name: Upload via OTA
+        run: |
+          arduino-cli upload -p 192.168.0.168 --fqbn esp32:esp32:esp32 --port 3232 blink.ino
+        env:
+          OTA_PASSWORD: ${{ secrets.OTA_PASSWORD }}

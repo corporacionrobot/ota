@@ -30,7 +30,5 @@ jobs:
 
       - name: Upload via OTA
         run: |
-          arduino-cli upload -p 192.168.1.107 --fqbn esp32:esp32:esp32 --port "net:192.168.1.107" --password ${{ secrets.OTA_PASSWORD }} blink/blink.ino
-          
-        env:
-          OTA_PASSWORD: ${{ secrets.OTA_PASSWORD }}
+          arduino-cli upload -p 192.168.1.107 --fqbn esp32:esp32:esp32 --port "net:192.168.1.107" --password 123 blink/blink.ino
+
